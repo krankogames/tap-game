@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class UIFunctions : MonoBehaviour
 {
     public GameObject menu;
+    public GameObject newGameButton;
 
     public void OnNewGameClicked()
     {
         menu.SetActive(false);
-        SceneManager.LoadScene("SampleScene");
+        newGameButton.SetActive(false);
+        SceneManager.LoadScene("Main");
         Time.timeScale = 1;
     }
 
