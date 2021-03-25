@@ -4,21 +4,34 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    private float obstacleTimer = 4f;
-    private float timer = 0;
     public GameObject obstaclePrefab;
     public GameObject player;
-    void Update()
-    {
-        if (timer > obstacleTimer)
-        {
-            GameObject obstacle = Instantiate(obstaclePrefab);
-            obstacle.transform.position = new Vector3(Random.Range(0, 3f), player.transform.position.y + 15, 0);
-            Destroy(obstacle, 30);
-            timer = 0;
-            obstacleTimer-= 0.05f;
-        }
 
-        timer += Time.deltaTime;
+    private float h;
+    private float s;
+    private float v;
+
+    private void Awake()
+    {
+        h = 36;
+        s = 53;
+        v = 100;
     }
+
+    public void SpawnObstacle(Vector3 pos)
+    {
+        var x = Random.Range(-6, 6);
+        GameObject obstacle = Instantiate(obstaclePrefab);
+        obstacle.transform.position = new Vector3(x, pos.y, pos.z);
+
+        h += 3;
+        if (h >= 100)
+            h = 36;
+
+        var col = Color.HSVToRGB(h / 100, s / 100, v / 100);
+        obstacle.transform.GetChild(0).GetComponent<SpriteRenderer>().color = col;
+        obstacle.transform.GetChild(1).GetComponent<SpriteRenderer>().color = col;
+        Destroy(obstacle, 30);
+    }
+
 }
